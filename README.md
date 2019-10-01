@@ -1,6 +1,7 @@
-## StarGAN Voice Conversion
+## スターGAN ボイスコンバージェンス  メモ
 
-This is a tensorflow implementation of the paper: [StarGAN-VC: Non-parallel many-to-many voice conversion with star generative adversarial networks](https://arxiv.org/abs/1806.02169).
+**Original Paper**  
+[StarGAN-VC: Non-parallel many-to-many voice conversion with star generative adversarial networks](https://arxiv.org/abs/1806.02169).
 
 
 
@@ -20,6 +21,17 @@ This is a tensorflow implementation of the paper: [StarGAN-VC: Non-parallel many
 ## Usage
 
 #### Download dataset
+
+vcc 2016データセットはここからダウンロードできるよ！
+
+Data Share -  SUPERSEDED - The Voice Conversion Challenge 2016  
+[https://datashare.is.ed.ac.uk/handle/10283/2042](https://datashare.is.ed.ac.uk/handle/10283/2042)
+
+- 訓練データセット
+  [VCC training data: source and target evaluation data (7.357Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_all.zip?sequence=17&isAllowed=y)
+
+- テストデータセット
+  [VCC training data: evaluation data released to participants during the challenge (3.576Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_release.zip?sequence=18&isAllowed=y)
 
 Download the vcc 2016 dataset to the current directory and create `train directory` and `test directory`.
 
