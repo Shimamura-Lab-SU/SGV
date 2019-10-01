@@ -27,11 +27,11 @@ vcc 2016データセットはここからダウンロードできるよ！
 Data Share -  SUPERSEDED - The Voice Conversion Challenge 2016  
 [https://datashare.is.ed.ac.uk/handle/10283/2042](https://datashare.is.ed.ac.uk/handle/10283/2042)
 
-- 訓練データセット
-  [VCC training data: source and target evaluation data (7.357Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_all.zip?sequence=17&isAllowed=y)
+1. **訓練データセット:**
+  ここからデータセットZIPファイルをダウンロード[VCC training data: source and target evaluation data (7.357Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_all.zip?sequence=17&isAllowed=y)して解凍する．解凍して出てきた`vcc2016_training`を保存．
 
-- テストデータセット
-  [VCC training data: evaluation data released to participants during the challenge (3.576Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_release.zip?sequence=18&isAllowed=y)
+2. **テストデータセット:**
+  ここからデータセットZIPファイルをダウンロード[VCC training data: evaluation data released to participants during the challenge (3.576Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_release.zip?sequence=18&isAllowed=y)して解凍する．解凍して出てきた`evaluation_all`を保存．
 
 Download the vcc 2016 dataset to the current directory and create `train directory` and `test directory`.
 
@@ -51,19 +51,22 @@ The data directory now looks like this:
 
 ```
 data
-├── fourspeakers  (training set)
+├── fourspeakers  (training set <  vcc2016_trainingから４つのフォルダをコピーしてぶち込む)
 │   ├── SF1
 │   ├── SF2
 │   ├── TM1
 │   └── TM2
-├── fourspeakers_test (testing set)
+├── fourspeakers_test (testing set <  evaluation_allから４つのフォルダをコピーしてぶち込む)
 │   ├── SF1
 │   ├── SF2
 │   ├── TM1
 │   └── TM2
-├── vcc2016_training (vcc 2016 training set)
+├── vcc2016_training (vcc2016_training.zipを解凍したときに出てくるフォルダ)
+│   ├── SF1
+|   ├── SF2
+|   ├── SF3
 │   ├── ...
-├── evaluation_all (vcc 2016 evaluation set, we use it as testing set)
+├── evaluation_all (evaluation_all.zipを解凍したときに出てくるフォルダ)
 │   ├── ...
 ```
 
