@@ -1,4 +1,4 @@
-## スターGAN ボイスコンバージェンス  メモ
+# スターGAN ボイスコンバージェンス  メモ
 
 [StarGAN VC(pytorch版)リポジトリ](https://github.com/hujinsen/pytorch-StarGAN-VC)の日本語による説明．
 あとソースコードの微修正．
@@ -8,7 +8,7 @@
 
 **変換音声は*converted*ディレクトリに保存される．**
 
-## Dependencies
+# Dependencies
 
 - Python 3.6 (or higher)
 - pytorch 1.1 (see [https://pytorch.org/](https://pytorch.org/))
@@ -20,9 +20,9 @@
 
 > NOTE:According to some feedbacks, we recommend to use tensorflow version 1.8  exactly. (Tensorflow 1.11 generate nonsense results)
 
-## Usage
+# Usage
 
-#### Download dataset
+## Download dataset
 
 vcc 2016データセットはここからダウンロードできるよ！
 
@@ -65,7 +65,7 @@ data
 
 
 
-#### Preprocess
+## Preprocess
 
 はじめに`preprocess.py`を実行して音声クリップから特徴量(mcep：メルケプストラム，f0：基本周波数，ap：非周期性指標)を抽出する．それらの特徴量は`.npy`ファイルにソートして保存される．`preprocess.py`の実行コマンドは以下の通り．
 
@@ -76,7 +76,7 @@ python preprocess.py
 約5~10分ぐらいかかるよ！
 **テスト時は*preprocess*が必要ない！**
 
-#### Train
+## Train
 
 学習実行時，何エポックごとかに`result_***`ディレクトリに学習データに対する処理結果が保存される．
 `result_***`にテストデータに対する処理結果(たぶん？)が保存される．実行コマンドは以下の通り．
@@ -87,7 +87,7 @@ python main.py
 
 
 
-#### Convert
+## Convert
 
 ```
 python main.py --mode test --test_iters 200000 --src_speaker TM1 --trg_speaker "['TM1','SF1']"
@@ -95,14 +95,14 @@ python main.py --mode test --test_iters 200000 --src_speaker TM1 --trg_speaker "
 
 
 
-## Summary
+# Summary
 
 The network structure shown as follows:
 
 ![Snip20181102_2](./imgs/Snip20181102_2.png)
 
 
-## Reference
+# Reference
 
 [CycleGAN-VC code](https://github.com/leimao/Voice_Converter_CycleGAN)
 
