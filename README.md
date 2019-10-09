@@ -1,16 +1,18 @@
 ## スターGAN ボイスコンバージェンス  メモ
 
-**Original Paper**  
+[StarGAN VC(pytorch版)リポジトリ](https://github.com/hujinsen/pytorch-StarGAN-VC)の日本語による説明．
+あとソースコードの微修正．
+
+**[Original Paper]**  
 [StarGAN-VC: Non-parallel many-to-many voice conversion with star generative adversarial networks](https://arxiv.org/abs/1806.02169).
 
-
-
-**The converted voice examples are in *converted* directory**
+**変換音声は*converted*ディレクトリに保存される．**
 
 ## Dependencies
 
 - Python 3.6 (or higher)
-- tensorflow 1.8
+- pytorch 1.1 (see [https://pytorch.org/](https://pytorch.org/))
+- tensorflow 1.14
 - librosa 
 - pyworld 
 - tensorboard
@@ -28,35 +30,26 @@ Data Share -  SUPERSEDED - The Voice Conversion Challenge 2016
 [https://datashare.is.ed.ac.uk/handle/10283/2042](https://datashare.is.ed.ac.uk/handle/10283/2042)
 
 1. **訓練データセット:**
-  ここからデータセットZIPファイルをダウンロード[VCC training data: source and target evaluation data (7.357Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_all.zip?sequence=17&isAllowed=y)して解凍する．解凍して出てきた`vcc2016_training`を保存．
+  ここからデータセットZIPファイルをダウンロード[VCC training data: source and target evaluation data (7.357Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_all.zip?sequence=17&isAllowed=y)して解凍する．解凍して出てきた`vcc2016_training`を`data`フォルダ内に保存．
 
 2. **テストデータセット:**
-  ここからデータセットZIPファイルをダウンロード[VCC training data: evaluation data released to participants during the challenge (3.576Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_release.zip?sequence=18&isAllowed=y)して解凍する．解凍して出てきた`evaluation_all`を保存．
+  ここからデータセットZIPファイルをダウンロード[VCC training data: evaluation data released to participants during the challenge (3.576Mb)](https://datashare.is.ed.ac.uk/bitstream/handle/10283/2042/evaluation_release.zip?sequence=18&isAllowed=y)して解凍する．解凍して出てきた`evaluation_all`を`data`フォルダ内に保存．
 
-Download the vcc 2016 dataset to the current directory and create `train directory` and `test directory`.
+保存したデータの一部を以下の訓練セットフォルダとテストセットフォルダに保存する．
 
-```
-python download.py --datasets vcc2016 --train_dir ./data/fourspeakers --test_dir ./data/fourspeakers_test
+1. **訓練セット:** `./data/vcc2016_training`から４人のスピーカ(SF1,SF2,TM1,TM2)を選んで`./data/speakers`に保存する.
+2. **テストセット** `./data/evaluation_all`から４人のスピーカ(SF1,SF2,TM1,TM2)を選んで`./data/speakers_test`に保存する.
 
-For simplicity use:
-python download.py 
-```
-
-The downloaded zip files are extracted to `./data/vcc2016_training` and `./data/evaluation_all`.
-
-1. **training set:** In the experiment, we choose **four speakers** from `./data/vcc2016_training`.  We  move the corresponding folder(eg. SF1,SF2,TM1,TM2 ) to `./data/fourspeakers`.
-2. **testing set** In the experiment, we choose **four speakers** from `./data/evaluation_all`.  We  move the corresponding folder(eg. SF1,SF2,TM1,TM2 ) to `./data/fourspeakers_test`.
-
-The data directory now looks like this:
+↓↓ 以下はフォルダ構成をまとめたもの．
 
 ```
 data
-├── fourspeakers  (training set <  vcc2016_trainingから４つのフォルダをコピーしてぶち込む)
+├── speakers  (training set <  vcc2016_trainingから４つのフォルダをコピーしてぶち込む)
 │   ├── SF1
 │   ├── SF2
 │   ├── TM1
 │   └── TM2
-├── fourspeakers_test (testing set <  evaluation_allから４つのフォルダをコピーしてぶち込む)
+├── speakers_test (testing set <  evaluation_allから４つのフォルダをコピーしてぶち込む)
 │   ├── SF1
 │   ├── SF2
 │   ├── TM1
@@ -72,42 +65,32 @@ data
 
 
 
-#### Preprocess dataset
+#### Preprocess
 
-Extract features (mcep, f0, ap) from each speech clip.  The features are stored as npy files. We also calculate the statistical characteristics for each speaker.
+はじめに`preprocess.py`を実行して音声クリップから特徴量(mcep：メルケプストラム，f0：基本周波数，ap：非周期性指標)を抽出する．それらの特徴量は`.npy`ファイルにソートして保存される．`preprocess.py`の実行コマンドは以下の通り．
 
 ```
-python preprocess.py --input_dir ./data/fourspeakers --output_dir ./data/processed --ispad True
-
-For simplicity use:
 python preprocess.py
 ```
 
-This process may take a few minutes !
-
-**Note that test set doesn’t need preprocess.**
-
-
+約5~10分ぐらいかかるよ！
+**テスト時は*preprocess*が必要ない！**
 
 #### Train
 
-Read npy files from `processed_dir` to train model and raw wav files from` test_wav_dir` to randomly generate some samples using the model during training.
+学習実行時，何エポックごとかに`result_***`ディレクトリに学習データに対する処理結果が保存される．
+`result_***`にテストデータに対する処理結果(たぶん？)が保存される．実行コマンドは以下の通り．
 
 ```
-python train.py --processed_dir ./data/processed --test_wav_dir ./data/fourspeakers_test
-
-For simplicity use:
-python train.py
+python main.py
 ```
 
 
 
 #### Convert
 
-Restore model from `model_dir`, convert source_speaker’s speech to target_speaker’s speech. The results are strored in `./converted_voices`
-
 ```
-python convert.py --model_dir ./your_model_dir  --source_speaker SF1 --target_speaker TM1
+python main.py --mode test --test_iters 200000 --src_speaker TM1 --trg_speaker "['TM1','SF1']"
 ```
 
 
@@ -118,9 +101,6 @@ The network structure shown as follows:
 
 ![Snip20181102_2](./imgs/Snip20181102_2.png)
 
-
-
-**Note: Our implementation follows the original paper’s network structure**, while [pytorch StarGAN-VC code](https://github.com/liusongxiang/StarGAN-Voice-Conversion)‘network is different from the paper as it’s classifier shares the Discriminator’s weights. Both ways generate good converted speeches.
 
 ## Reference
 
