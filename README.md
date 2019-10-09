@@ -115,9 +115,3 @@ The network structure shown as follows:
 [StarGAN paper](https://arxiv.org/abs/1806.02169)
 
 [CycleGAN paper](https://arxiv.org/abs/1703.10593v4)
-
----
-
-If you feel this repo is good, please  **star**  ! 
-
-Your encouragement is my biggest motivation!
