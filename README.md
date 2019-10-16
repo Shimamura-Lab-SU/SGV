@@ -11,12 +11,12 @@
 # Dependencies
 
 - Python 3.6 (or higher)
-- pytorch 1.1 (see [https://pytorch.org/](https://pytorch.org/))
-- tensorflow 1.14
+- pytorch 1.1.0 (see [https://pytorch.org/](https://pytorch.org/))
+- **tensorflow 2.0** (Be careful! Not use tensorflow 1.X)
 - librosa 
 - pyworld 
-- tensorboard
-- scikit-learn
+- tensorboard 2.0
+- scikit-learn 0.21.3 (or higher)
 
 > NOTE:According to some feedbacks, we recommend to use tensorflow version 1.8  exactly. (Tensorflow 1.11 generate nonsense results)
 
