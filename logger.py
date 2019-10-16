@@ -1,14 +1,14 @@
 import tensorflow as tf
-import tensorflow.compat.v1 as tf_com
+import tensorflow.summary as tf_summary
 
 class Logger(object):
     """Tensorboard logger."""
 
     def __init__(self, log_dir):
         """Initialize summary writer."""
-        self.writer = tf_com.summary.FileWriter(log_dir)
+        self.writer = tf_summary.create_file_writer(log_dir)
 
     def scalar_summary(self, tag, value, step):
         """Add scalar summary."""
-        summary = tf_com.Summary(value=[tf_com.Summary.Value(tag=tag, simple_value=value)])
-        self.writer.add_summary(summary, step)
+        with self.writer.as_default():
+            tf_summary.scalar(tag, value, step=step)
